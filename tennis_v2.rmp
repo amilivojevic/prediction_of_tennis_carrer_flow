@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<process version="5.3.015">
+  <context>
+    <input/>
+    <output/>
+    <macros/>
+  </context>
+  <operator activated="true" class="process" compatibility="5.3.015" expanded="true" name="Process">
+    <parameter key="logverbosity" value="init"/>
+    <parameter key="random_seed" value="2001"/>
+    <parameter key="send_mail" value="never"/>
+    <parameter key="notification_email" value=""/>
+    <parameter key="process_duration_for_mail" value="30"/>
+    <parameter key="encoding" value="SYSTEM"/>
+    <process expanded="true">
+      <operator activated="true" class="open_file" compatibility="5.3.015" expanded="true" height="60" name="Open File" width="90" x="45" y="75">
+        <parameter key="resource_type" value="URL"/>
+        <parameter key="url" value="https://raw.githubusercontent.com/serve-and-volley/atp-world-tour-tennis-data/master/csv/5_players/player_overviews_UNINDEXED.csv"/>
+      </operator>
+      <operator activated="true" class="read_csv" compatibility="5.3.015" expanded="true" height="60" name="Read CSV" width="90" x="179" y="75">
+        <parameter key="csv_file" value="C:\Users\Sandra\AppData\Local\Temp\rm_file_5655709609078303732.dump"/>
+        <parameter key="column_separators" value=","/>
+        <parameter key="trim_lines" value="false"/>
+        <parameter key="use_quotes" value="true"/>
+        <parameter key="quotes_character" value="&quot;"/>
+        <parameter key="escape_character" value="\"/>
+        <parameter key="skip_comments" value="false"/>
+        <parameter key="comment_characters" value="#"/>
+        <parameter key="parse_numbers" value="true"/>
+        <parameter key="decimal_character" value="."/>
+        <parameter key="grouped_digits" value="false"/>
+        <parameter key="grouping_character" value=","/>
+        <parameter key="date_format" value="yyyy.MM.dd"/>
+        <parameter key="first_row_as_names" value="false"/>
+        <list key="annotations">
+          <parameter key="0" value="Name"/>
+        </list>
+        <parameter key="time_zone" value="SYSTEM"/>
+        <parameter key="locale" value="English (United States)"/>
+        <parameter key="encoding" value="windows-1252"/>
+        <list key="data_set_meta_data_information">
+          <parameter key="0" value="player_id.true.polynominal.attribute"/>
+          <parameter key="1" value="player_slug.true.polynominal.attribute"/>
+          <parameter key="2" value="first_name.true.polynominal.attribute"/>
+          <parameter key="3" value="last_name.true.polynominal.attribute"/>
+          <parameter key="4" value="player_url.true.polynominal.attribute"/>
+          <parameter key="5" value="flag_code.true.polynominal.attribute"/>
+          <parameter key="6" value="residence.true.polynominal.attribute"/>
+          <parameter key="7" value="birthplace.true.polynominal.attribute"/>
+          <parameter key="8" value="birthdate.true.date.attribute"/>
+          <parameter key="9" value="birth_year.false.integer.attribute"/>
+          <parameter key="10" value="birth_month.false.integer.attribute"/>
+          <parameter key="11" value="birth_day.false.integer.attribute"/>
+          <parameter key="12" value="turned_pro.true.integer.attribute"/>
+          <parameter key="13" value="weight_lbs.false.integer.attribute"/>
+          <parameter key="14" value="weight_kg.true.integer.attribute"/>
+          <parameter key="15" value="height_ft.false.polynominal.attribute"/>
+          <parameter key="16" value="height_inches.false.integer.attribute"/>
+          <parameter key="17" value="height_cm.true.integer.attribute"/>
+          <parameter key="18" value="handedness.true.binominal.attribute"/>
+          <parameter key="19" value="backhand.true.binominal.attribute"/>
+        </list>
+        <parameter key="read_not_matching_values_as_missings" value="true"/>
+        <parameter key="datamanagement" value="double_array"/>
+      </operator>
+      <operator activated="true" class="filter_examples" compatibility="5.3.015" expanded="true" height="76" name="Filter Examples" width="90" x="313" y="75">
+        <parameter key="condition_class" value="no_missing_attributes"/>
+        <parameter key="invert_filter" value="false"/>
+      </operator>
+      <operator activated="true" class="nominal_to_numerical" compatibility="5.3.015" expanded="true" height="94" name="Nominal to Numerical" width="90" x="313" y="210">
+        <parameter key="return_preprocessing_model" value="false"/>
+        <parameter key="create_view" value="false"/>
+        <parameter key="attribute_filter_type" value="all"/>
+        <parameter key="attribute" value=""/>
+        <parameter key="attributes" value=""/>
+        <parameter key="use_except_expression" value="false"/>
+        <parameter key="value_type" value="nominal"/>
+        <parameter key="use_value_type_exception" value="false"/>
+        <parameter key="except_value_type" value="file_path"/>
+        <parameter key="block_type" value="single_value"/>
+        <parameter key="use_block_type_exception" value="false"/>
+        <parameter key="except_block_type" value="single_value"/>
+        <parameter key="invert_selection" value="false"/>
+        <parameter key="include_special_attributes" value="false"/>
+        <parameter key="coding_type" value="dummy coding"/>
+        <parameter key="use_comparison_groups" value="false"/>
+        <list key="comparison_groups"/>
+        <parameter key="unexpected_value_handling" value="all 0 and warning"/>
+        <parameter key="use_underscore_in_name" value="false"/>
+      </operator>
+      <operator activated="true" class="k_means" compatibility="5.3.015" expanded="true" height="76" name="Clustering" width="90" x="447" y="120">
+        <parameter key="add_cluster_attribute" value="true"/>
+        <parameter key="add_as_label" value="false"/>
+        <parameter key="remove_unlabeled" value="false"/>
+        <parameter key="k" value="6"/>
+        <parameter key="max_runs" value="10"/>
+        <parameter key="determine_good_start_values" value="false"/>
+        <parameter key="measure_types" value="BregmanDivergences"/>
+        <parameter key="mixed_measure" value="MixedEuclideanDistance"/>
+        <parameter key="nominal_measure" value="NominalDistance"/>
+        <parameter key="numerical_measure" value="EuclideanDistance"/>
+        <parameter key="divergence" value="SquaredEuclideanDistance"/>
+        <parameter key="kernel_type" value="radial"/>
+        <parameter key="kernel_gamma" value="1.0"/>
+        <parameter key="kernel_sigma1" value="1.0"/>
+        <parameter key="kernel_sigma2" value="0.0"/>
+        <parameter key="kernel_sigma3" value="2.0"/>
+        <parameter key="kernel_degree" value="3.0"/>
+        <parameter key="kernel_shift" value="1.0"/>
+        <parameter key="kernel_a" value="1.0"/>
+        <parameter key="kernel_b" value="0.0"/>
+        <parameter key="max_optimization_steps" value="100"/>
+        <parameter key="use_local_random_seed" value="false"/>
+        <parameter key="local_random_seed" value="1992"/>
+      </operator>
+      <connect from_op="Open File" from_port="file" to_op="Read CSV" to_port="file"/>
+      <connect from_op="Read CSV" from_port="output" to_op="Filter Examples" to_port="example set input"/>
+      <connect from_op="Filter Examples" from_port="example set output" to_op="Nominal to Numerical" to_port="example set input"/>
+      <connect from_op="Nominal to Numerical" from_port="example set output" to_op="Clustering" to_port="example set"/>
+      <connect from_op="Clustering" from_port="cluster model" to_port="result 1"/>
+      <portSpacing port="source_input 1" spacing="0"/>
+      <portSpacing port="sink_result 1" spacing="0"/>
+      <portSpacing port="sink_result 2" spacing="0"/>
+    </process>
+  </operator>
+</process>
