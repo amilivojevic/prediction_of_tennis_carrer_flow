@@ -8,7 +8,7 @@ def worker_func(a):
 	#print(a,a+100)
 
 pool = ThreadPool(processes=4)
-nums = list(range(0,11000,100))
+nums = list(range(0,11000,4000))
 pool.map(worker_func, nums)
 
 pool.close()
