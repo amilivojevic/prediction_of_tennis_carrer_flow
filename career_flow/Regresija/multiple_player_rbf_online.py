@@ -13,7 +13,7 @@ import sys
 from sklearn.preprocessing import MinMaxScaler
 
 #------------------------------------------------------------------------------------------------
-
+#Podesavanje grafa
 params = {'legend.fontsize': 'x-large',
           'figure.figsize': (100, 20),
          'axes.labelsize': 'x-large',
@@ -79,30 +79,36 @@ def getPlayer(playerID):
 
 #--------------------------------------------------------------------------------------------------	
 
-
+#ocitavanje prvog igraca iz argumenata
 del sys.argv[0]
 first=sys.argv.pop(0)
 print(first)
 xy=getPlayer(first)
 
+#ocitavanje ostalih igraca iz argumenata
 for player in sys.argv:
 	print(player)
 	playerData=getPlayer(player)
 	xy=np.append(xy,playerData,axis=0)
 
+#strukturiran niz
 xy_sorted = np.core.records.fromarrays(xy.transpose(), names='x,y', formats = 'f8, f8')
 
+#sortiranje po vremenskoj x osi
 xy_sorted.sort(order = "x")
 
 
 svr_rbf = SVR(kernel='rbf', C=1e3, gamma=10)
 
+#fitovanje tacaka u svr model
 svr_rbf.fit(xy_sorted["x"].reshape(-1,1), xy_sorted["y"])
+
 
 x_test = np.linspace(min(xy_sorted["x"]),max(xy_sorted["x"]))
 y_rbf = svr_rbf.predict(x_test[:,None])
 plt.plot(x_test, y_rbf, color='red', label='RBF model')
 
+#iscrtavanje 
 plt.plot(xy_sorted['x'],xy_sorted['y'], marker='o', linestyle='None')
 plt.savefig('normalized/rankings.png')
 
