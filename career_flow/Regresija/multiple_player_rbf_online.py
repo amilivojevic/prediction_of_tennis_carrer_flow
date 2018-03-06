@@ -103,12 +103,12 @@ svr_rbf = SVR(kernel='rbf', C=1e3, gamma=10)
 #fitovanje tacaka u svr model
 svr_rbf.fit(xy_sorted["x"].reshape(-1,1), xy_sorted["y"])
 
-
+#iscrtavanje rbf krive
 x_test = np.linspace(min(xy_sorted["x"]),max(xy_sorted["x"]))
 y_rbf = svr_rbf.predict(x_test[:,None])
 plt.plot(x_test, y_rbf, color='red', label='RBF model')
 
-#iscrtavanje 
+#iscrtavanje podataka
 plt.plot(xy_sorted['x'],xy_sorted['y'], marker='o', linestyle='None')
 plt.savefig('normalized/rankings.png')
 
