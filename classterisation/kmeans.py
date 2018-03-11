@@ -1,22 +1,32 @@
+import numpy as np
 from sklearn.preprocessing import scale
 from sklearn.cluster import KMeans
 import import_data
-# Import `train_test_split`
-from sklearn.cross_validation import train_test_split
 
 # normalization
 data = import_data.import_data_for_kmeans()
 data = scale(data)
 
+print(data)
+
 print("Size of data:",data.size)
 
-kmeans=KMeans(n_clusters=5,max_iter=50).fit(data)
+kmeans=KMeans(n_clusters=10).fit(data)
+
+print(kmeans.cluster_centers_)
+
+
+samples = [[-4.82492195,  0.39868205,  0.04708505, -0.39915157, -1.78619041],
+ [-4.95757716, -0.33659845,  0.18933952, -0.39915157, -1.78619041],
+ [-2.70243868,  0.00653245,  0.04708505, -0.39915157,  0.55985073],
+ [ 0.74659665,  0.34966335,  0.41694668, -0.39915157,  0.55985073],
+ [ 1.14456226,  0.00653245,  0.04708505, -0.39915157,  0.55985073],
+ [ 1.27721747, -0.33659845,  0.18933952, -0.39915157,  0.55985073]]
+
 labels=kmeans.predict(data)	#index of the cluster each sample belongs to
 print("Size of leng labels:",labels.size)
+#print("labels: ")
+#print(labels)
 
-num_clus=[0, 0, 0, 0, 0]
-for i in labels:
-	num_clus[labels[i]]+=1
-
-for i in range(5):
-	print("Cluster",i,"has", num_clus[i],"items")
+print("LABELS:")
+print(np.bincount(labels))

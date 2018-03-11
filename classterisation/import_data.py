@@ -38,8 +38,12 @@ def import_and_clean_data_set():
     # handednessCountMissingValues()
     players = utils.handednessDropRowsWithMissingValues(players)
     players = utils.weightMissingValues(players)
+    players = utils.weightOutliers(players)
+
     utils.backhandToInt(players)
     utils.handednessToInt(players)
+
+
     print("*****")
     print("players size: ", len(players))
     print(players.head())
@@ -49,5 +53,7 @@ def import_data_for_kmeans():
     players = import_and_clean_data_set()
     # keep_columns = [ "birthdate","turned_pro", "weight_kg", "height_cm","handedness", "backhand"]
     keep_columns = [ "turned_pro", "weight_kg", "height_cm", "handedness", "backhand"]
-
+    print("\n\n\n")
+    print(players[keep_columns].head())
+    print("\n\n\n")
     return players[keep_columns]

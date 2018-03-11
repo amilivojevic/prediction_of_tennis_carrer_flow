@@ -16,6 +16,16 @@ def avgTurnedPro(players):
     print("AVG years turning pro: %f",avg)
     return avg
 
+def weightOutliers(players):
+    indecies = []
+    for ind,player in players.iterrows():
+        if (player['weight_kg'] > 200):
+            indecies.append(ind)
+    for i in indecies:
+        print("i = ", i)
+        print(players[i])
+        players.drop(players.index[[i]])
+
 def turnedProMissingValues(players):
     avg = avgTurnedPro(players)
     indecies = []
