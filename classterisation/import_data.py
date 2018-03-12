@@ -43,7 +43,6 @@ def import_and_clean_data_set():
     utils.backhandToInt(players)
     utils.handednessToInt(players)
 
-
     print("*****")
     print("players size: ", len(players))
     print(players.head())

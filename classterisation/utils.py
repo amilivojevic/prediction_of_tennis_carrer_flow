@@ -21,10 +21,8 @@ def weightOutliers(players):
     for ind,player in players.iterrows():
         if (player['weight_kg'] > 200):
             indecies.append(ind)
-    for i in indecies:
-        print("i = ", i)
-        print(players[i])
-        players.drop(players.index[[i]])
+
+    return players.drop(indecies)
 
 def turnedProMissingValues(players):
     avg = avgTurnedPro(players)

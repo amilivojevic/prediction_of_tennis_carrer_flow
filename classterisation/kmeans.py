@@ -7,14 +7,9 @@ import import_data
 data = import_data.import_data_for_kmeans()
 data = scale(data)
 
-print(data)
-
-print("Size of data:",data.size)
-
 kmeans=KMeans(n_clusters=10).fit(data)
 
-print(kmeans.cluster_centers_)
-
+#print("Centers of clusters",kmeans.cluster_centers_)
 
 samples = [[-4.82492195,  0.39868205,  0.04708505, -0.39915157, -1.78619041],
  [-4.95757716, -0.33659845,  0.18933952, -0.39915157, -1.78619041],
@@ -24,9 +19,6 @@ samples = [[-4.82492195,  0.39868205,  0.04708505, -0.39915157, -1.78619041],
  [ 1.27721747, -0.33659845,  0.18933952, -0.39915157,  0.55985073]]
 
 labels=kmeans.predict(data)	#index of the cluster each sample belongs to
-print("Size of leng labels:",labels.size)
-#print("labels: ")
-#print(labels)
 
 print("LABELS:")
 print(np.bincount(labels))
