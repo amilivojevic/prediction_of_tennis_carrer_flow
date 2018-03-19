@@ -22,3 +22,7 @@ labels=kmeans.predict(data)	#index of the cluster each sample belongs to
 
 print("LABELS:")
 print(np.bincount(labels))
+
+labels_str=" ".join(str(elem) for elem in labels)
+with open('player_cluster.txt','w') as f:
+    f.write(labels_str)
