@@ -79,38 +79,64 @@ def getPlayer(playerID):
 
 #--------------------------------------------------------------------------------------------------	
 
-#ocitavanje prvog igraca iz argumenata
-del sys.argv[0]
-first=sys.argv.pop(0)
+with open('cluster.txt', 'r') as myfile:
+    ids=myfile.read().replace('\n', '')
+
+splitIDs=ids.split()
+
+MainPlayer=splitIDs[0]
+print("Analyzed player: "+MainPlayer)
+MainPlayerData=getPlayer(MainPlayer);
+LabeledMainPlayer = np.core.records.fromarrays(MainPlayerData.transpose(), names='x,y', formats = 'f8, f8')
+
+splitIDs=np.delete(splitIDs,0)
+
+first=splitIDs[0]
 print(first)
 xy=getPlayer(first)
 
-#ocitavanje ostalih igraca iz argumenata
-for player in sys.argv:
-	print(player)
-	playerData=getPlayer(player)
-	xy=np.append(xy,playerData,axis=0)
+splitIDs=np.delete(splitIDs,0)
 
-#strukturiran niz
+
+for player in splitIDs:
+	if player in p1["id"]:
+		print(player)
+		playerData=getPlayer(player)
+		xy=np.append(xy,playerData,axis=0)
+	else:
+		with open('notFound.txt','w') as f:
+			f.write(player)
+
+
 xy_sorted = np.core.records.fromarrays(xy.transpose(), names='x,y', formats = 'f8, f8')
 
-#sortiranje po vremenskoj x osi
 xy_sorted.sort(order = "x")
 
 
 svr_rbf = SVR(kernel='rbf', C=1e3, gamma=10)
 
-#fitovanje tacaka u svr model
 svr_rbf.fit(xy_sorted["x"].reshape(-1,1), xy_sorted["y"])
 
-#iscrtavanje rbf krive
 x_test = np.linspace(min(xy_sorted["x"]),max(xy_sorted["x"]))
 y_rbf = svr_rbf.predict(x_test[:,None])
+
+plt.plot(xy_sorted['x'],xy_sorted['y'], marker='o', linestyle='None', color='blue')
+
 plt.plot(x_test, y_rbf, color='red', label='RBF model')
 
-#iscrtavanje podataka
-plt.plot(xy_sorted['x'],xy_sorted['y'], marker='o', linestyle='None')
+plt.plot(LabeledMainPlayer['x'],LabeledMainPlayer['y'], marker='o', color='green', linestyle='None')
+
 plt.savefig('normalized/rankings.png')
+
+sum=0;
+count=0;
+
+for x,y in LabeledMainPlayer:
+	count=count+1;
+	sum= sum+ abs(y-svr_rbf.predict(x))
+	print(x,y)
+	
+print(sum/count)
 
 #print(xy_sorted)
 
