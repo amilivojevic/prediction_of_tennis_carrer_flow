@@ -56,3 +56,13 @@ def import_data_for_kmeans():
     print(players[keep_columns].head())
     print("\n\n\n")
     return players[keep_columns]
+
+def playerId_index():
+    players=import_and_clean_data_set()
+    id_index={}
+    i=0;
+    for id in players['player_id']:
+        id_index[i]=id
+        i+=1;  
+    return id_index
+
